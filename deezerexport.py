@@ -16,6 +16,7 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 import json
+import sys
 try:
     from http.client import HTTPSConnection
 except ImportError:  # python2
@@ -58,8 +59,9 @@ if __name__ == "__main__":
         playlist = get_playlist(playlistid)
         playlists_data.append(playlist)
         print("  Playlist %s" % playlist["title"])
-        for track in playlist["tracks"]["data"]:
-            print("    %s -- by %s" % (track["title"], track["artist"]["name"]))
+        for track in playlist["tracks"]["data"]:          
+            print(("    %s -- by %s" % (track["title"], track["artist"]["name"]))\
+            .encode(sys.stdout.encoding, errors='replace'))
     if args.export is not None:
         data = {"uid": args.uid, "user": userdata["name"], "playlists": []}
         for playlist in playlists_data:
